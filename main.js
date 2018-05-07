@@ -1,14 +1,13 @@
 class Rate {
   constructor(selectorName, options) {
     // options: type || rotate || color
-    this.type = options.type || "pie";
     // 用户自定义属性
+    this.type = options.type || "pie";
+    this.color = options.color || 'greenyellow';
     this.selectorString = "[data-name='" + selectorName +"']";
     this.container = document.body.querySelector(this.selectorString);
     this.rotate = this.container.getAttribute("data-rate") || options.rotate;
     this.initRotate = 0;
-    // 自定义颜色
-    this.color = options.color || "green";
   }
   // 渲染函数
   render() {
@@ -22,13 +21,13 @@ class Rate {
         } else {
           switch (this.type) {
             case "pie":
-              this.renderPie(this.initRotate);
+              this.renderPie(this.initRotate, this.color);
               break;
             case "linePress":
-              this.renderLine(this.initRotate);
+              this.renderLine(this.initRotate, this.color);
               break;
             case "sandGlass":
-              this.renderSandGlass(this.initRotate);
+              this.renderSandGlass(this.initRotate, this.color);
               break;
             default:
               break;
@@ -37,11 +36,17 @@ class Rate {
       }, 16);
     }
   }
-
-  renderPie(rotate) {
+  defineColor(el, color) {
+    el.style.setProperty('--color', `linear-gradient(to right, transparent 50%, ${color} 0)`);
+    el.style.setProperty('--bg', '#f0f0f0');
+    el.style.setProperty('--color2', `linear-gradient(to left, transparent 50%, #f0f0f0 0)`);
+    el.style.setProperty('--bg2', `${color}`);
+  }
+  renderPie(rotate, color) {
     const content = `<div></div><span>${rotate}%</span>`;
     this.container.innerHTML = content;
     this.container.className = "pie";
+    this.defineColor(this.container, color);
     const rateDive = this.container.children[0];
 
     if (rotate < 50) {
@@ -53,26 +58,25 @@ class Rate {
       rateDive.style.transform = `rotate(${rotate2 / 100}turn)`;
     }
   }
-  renderLine(rotate) {
-    const content = `<div><span>${rotate}%</span></div>`;
+  renderLine(rotate, color) {
+    const content = `${rotate}%`;
     this.container.innerHTML = content;
-    this.container.className = "progress";
-    const rateDive = this.container.children[0];
-    const showData = rateDive.children[0];
-    rateDive.style.background = `linear-gradient(to right, greenyellow ${rotate}%, gray ${rotate}%)`;
+    this.container.className = "lineProgress";
+    this.container.style.background = `linear-gradient(to right, ${color} ${rotate}%, lightgray ${rotate}%)`;
   }
-  renderSandGlass(rotate) {
+  renderSandGlass(rotate, color) {
     const content = `<div></div>`;
     this.container.innerHTML = content;
-    const out = (1 - rotate / 100) * 2500;
-    const restLen = Math.sqrt(out) * 2;
+    // 根据三角形面积计算沙漏剩余部分的值
+    // resr为剩余部分的值
+    const rest = (1 - rotate / 100) * 2500;
+    // restLen outLen分別为剩余部分的高和流出部分的高
+    const restLen = Math.sqrt(rest) * 2;
     const outLen = 100 - restLen;
     const bottom = restLen + 100;
     this.container.className = "sandGlass";
-    this.container.style.background = `linear-gradient(to bottom, gray ${outLen}px, greenyellow ${outLen}px, gray ${bottom}px,
-        greenyellow ${bottom}px)`;
-    // 'linear-gradient(to bottom, gray  ' +
-    // outLen + 'px, greenyellow  ' + outLen + 'px, greenyellow 100px, gray 100px, gray ' + bottom + 'px, greenyellow ' + bottom + 'px)';
+    this.container.style.background = `linear-gradient(to bottom, gray ${outLen}px, ${color} ${outLen}px, gray ${bottom}px,
+        ${color} ${bottom}px)`;
   }
   getPressValue() {
     return this.rotate;
@@ -83,10 +87,11 @@ class Rate {
     this.render();
   }
 }
+// 创建实例并渲染
 const rate = new Rate("pieProgress",  {
   type: "pie",
   rotate: 60,
-  color: "red"
+  color: "green"
 });
 rate.render();
 const linePress = new Rate("lineProgress", {
