@@ -42,8 +42,8 @@ class Rate {
     } else {
       this.container.className = "pie pieMore50";
       rateDive.id = "roaterMore50";
-      let rotate = parseInt(rotate) - 100;
-      rateDive.style.transform = `rotate(${rotate / 100}turn)`;
+      let rotate2 = parseInt(rotate) - 100;
+      rateDive.style.transform = `rotate(${rotate2 / 100}turn)`;
     }
   }
   renderLine(rotate) {
@@ -71,7 +71,7 @@ class Rate {
 
 const rate = new Rate("pie__plugin",  {
   type: "pie",
-  rotate: 40,
+  rotate: 60,
   color: "red"
 });
 rate.render();

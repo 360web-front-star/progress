@@ -26,12 +26,12 @@
 	height:100%;
   left:50%;
   background-color: inherit;
-	transform-origin: center left;
+	transform-origin: left;
 }
 #roaterMore50 {
   left: 0;
   right: 50%;
-  transform-origin: center right;
+  transform-origin: right;
 }
 .pieMore50 {
   background-color: yellowgreen;
