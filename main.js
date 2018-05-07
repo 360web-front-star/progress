@@ -1,8 +1,9 @@
 class Rate {
-  constructor(id, options) {
+  constructor(selectorName, options) {
     // type： "pie" || "linePress" || "sandGlass"
     this.type = options.type || "pie";
-    this.container = document.getElementById(id);
+    this.selectorString = "[data-name='" + selectorName +"']";
+    this.container = document.body.querySelector( this.selectorString);
     this.rotate = options.rotate || this.container.getAttribute("data-rate");
     this.initRotate = 0;
     this.color = options.color || "green";
@@ -68,20 +69,19 @@ class Rate {
     // outLen + 'px, greenyellow  ' + outLen + 'px, greenyellow 100px, gray 100px, gray ' + bottom + 'px, greenyellow ' + bottom + 'px)';
   }
 }
-
-const rate = new Rate("pie__plugin",  {
+const rate = new Rate("pieProgress",  {
   type: "pie",
   rotate: 60,
   color: "red"
 });
 rate.render();
-const linePress = new Rate("progress__plugin", {
+const linePress = new Rate("lineProgress", {
   type: "linePress",
   rotate: 60,
   color: "red"
 });
 linePress.render();
-const sandGlass = new Rate("sandGlass__plugin",  {
+const sandGlass = new Rate("sandProgress",  {
   type: "sandGlass",
   rotate: 80,
   color: "red"
