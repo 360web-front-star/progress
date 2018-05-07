@@ -1,35 +1,41 @@
 class Rate {
   constructor(selectorName, options) {
-    // type： "pie" || "linePress" || "sandGlass"
+    // options: type || rotate || color
     this.type = options.type || "pie";
+    // 用户自定义属性
     this.selectorString = "[data-name='" + selectorName +"']";
-    this.container = document.body.querySelector( this.selectorString);
-    this.rotate = options.rotate || this.container.getAttribute("data-rate");
+    this.container = document.body.querySelector(this.selectorString);
+    this.rotate = this.container.getAttribute("data-rate") || options.rotate;
     this.initRotate = 0;
+    // 自定义颜色
     this.color = options.color || "green";
   }
+  // 渲染函数
   render() {
-    const s = setInterval(() => {
-      this.initRotate++;
-      if (this.initRotate >= this.rotate) {
-        clearInterval(s);
-      }
-      if (this.container) {
-        switch (this.type) {
-          case "pie":
-            this.renderPie(this.initRotate);
-            break;
-          case "linePress":
-            this.renderLine(this.initRotate);
-            break;
-          case "sandGlass":
-            this.renderSandGlass(this.initRotate);
-            break;
-          default:
-            break;
+    if (this.container) {
+      // 从0%到当前值
+      const s = setInterval(() => {
+        this.initRotate++;
+        if (this.initRotate > this.rotate) {
+          clearInterval(s);
+          this.initRotate = 0;
+        } else {
+          switch (this.type) {
+            case "pie":
+              this.renderPie(this.initRotate);
+              break;
+            case "linePress":
+              this.renderLine(this.initRotate);
+              break;
+            case "sandGlass":
+              this.renderSandGlass(this.initRotate);
+              break;
+            default:
+              break;
+          }
         }
-      }
-    }, 16);
+      }, 16);
+    }
   }
 
   renderPie(rotate) {
@@ -67,6 +73,14 @@ class Rate {
         greenyellow ${bottom}px)`;
     // 'linear-gradient(to bottom, gray  ' +
     // outLen + 'px, greenyellow  ' + outLen + 'px, greenyellow 100px, gray 100px, gray ' + bottom + 'px, greenyellow ' + bottom + 'px)';
+  }
+  getPressValue() {
+    return this.rotate;
+  }
+  // 获取进度值
+  setPressValue(value) {
+    this.rotate = value;
+    this.render();
   }
 }
 const rate = new Rate("pieProgress",  {
