@@ -1,0 +1,12 @@
+.progress {
+  width: 100%;
+}
+.progress div {
+  border-radius: 100px;
+  width:50%;
+}
+.progress div span {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
