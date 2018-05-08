@@ -1,11 +1,13 @@
 class Rate {
-  constructor(selectorName, options) {
+  constructor(selectorName, options = {
+    color: 'greenyellow', type: 'pie', rotate: 0, index: 1,
+  }) {
     // options: type || rotate || color || index
     // 用户自定义属性
-    this.type = options.type || 'pie';
-    this.color = options.color || 'greenyellow';
-    this.selectorString = `[data-name='${selectorName}']`;
+    this.type = options.type;
+    this.color = options.color;
     this.index = options.index - 1 || 0;
+    this.selectorString = `[data-name='${selectorName}']`;
     this.container = document.body.querySelectorAll(this.selectorString)[this.index];
     this.rotate = this.container.getAttribute('data-rate') || options.rotate;
     this.initRotate = 0;
