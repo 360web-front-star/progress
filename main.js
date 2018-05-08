@@ -1,11 +1,12 @@
 class Rate {
   constructor(selectorName, options) {
-    // options: type || rotate || color
+    // options: type || rotate || color || index
     // 用户自定义属性
     this.type = options.type || "pie";
     this.color = options.color || "greenyellow";
     this.selectorString = "[data-name='" + selectorName + "']";
-    this.container = document.body.querySelector(this.selectorString);
+    this.index = options.index - 1 || 0;
+    this.container = document.body.querySelectorAll(this.selectorString)[this.index];
     this.rotate = this.container.getAttribute("data-rate") || options.rotate;
     this.initRotate = 0;
   }
@@ -100,6 +101,13 @@ const rate = new Rate("pieProgress", {
   color: "#adff2f"
 });
 rate.render();
+const rate2 = new Rate("pieProgress", {
+  type: "pie",
+  rotate: 66,
+  color: "#adff2f",
+  index: 2
+});
+rate2.render();
 const linePress = new Rate("lineProgress", {
   type: "linePress",
   rotate: 77,
