@@ -3,8 +3,8 @@ class Rate {
     // options: type || rotate || color
     // 用户自定义属性
     this.type = options.type || "pie";
-    this.color = options.color || 'greenyellow';
-    this.selectorString = "[data-name='" + selectorName +"']";
+    this.color = options.color || "greenyellow";
+    this.selectorString = "[data-name='" + selectorName + "']";
     this.container = document.body.querySelector(this.selectorString);
     this.rotate = this.container.getAttribute("data-rate") || options.rotate;
     this.initRotate = 0;
@@ -37,10 +37,16 @@ class Rate {
     }
   }
   defineColor(el, color) {
-    el.style.setProperty('--color', `linear-gradient(to right, transparent 50%, ${color} 0)`);
-    el.style.setProperty('--bg', '#f0f0f0');
-    el.style.setProperty('--color2', `linear-gradient(to left, transparent 50%, #f0f0f0 0)`);
-    el.style.setProperty('--bg2', `${color}`);
+    el.style.setProperty(
+      "--color",
+      `linear-gradient(to right, transparent 50%, ${color} 0)`
+    );
+    el.style.setProperty("--bg", "#f0f0f0");
+    el.style.setProperty(
+      "--color2",
+      `linear-gradient(to left, transparent 50%, #f0f0f0 0)`
+    );
+    el.style.setProperty("--bg2", `${color}`);
   }
   renderPie(rotate, color) {
     const content = `<div></div><span>${rotate}%</span>`;
@@ -88,21 +94,21 @@ class Rate {
   }
 }
 // 创建实例并渲染
-const rate = new Rate("pieProgress",  {
+const rate = new Rate("pieProgress", {
   type: "pie",
-  rotate: 60,
-  color: "green"
+  rotate: 66,
+  color: "#adff2f"
 });
 rate.render();
 const linePress = new Rate("lineProgress", {
   type: "linePress",
-  rotate: 60,
-  color: "red"
+  rotate: 77,
+  color: "#21bb9c"
 });
 linePress.render();
-const sandGlass = new Rate("sandProgress",  {
+const sandGlass = new Rate("sandProgress", {
   type: "sandGlass",
-  rotate: 80,
-  color: "red"
+  rotate: 88,
+  color: "yellow"
 });
 sandGlass.render();
