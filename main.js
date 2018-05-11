@@ -83,7 +83,7 @@ class Rate {
     this.container.innerHTML = content;
     // 根据三角形面积计算沙漏剩余部分的值
     // resr为剩余部分的值
-    const rest = ((1 - rotate) / 100) * 2500;
+    const rest = ((100 - rotate) / 100) * 2500;
     // restLen outLen分別为剩余部分的高和流出部分的高
     const restLen = Math.sqrt(rest) * 2;
     const outLen = 100 - restLen;
