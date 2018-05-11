@@ -102,19 +102,19 @@ class Rate {
   }
 }
 // 创建实例并渲染
-const rate = new Rate('pieProgress', {
+const pie = new Rate('pieProgress', {
   type: 'pie',
   rotate: 66,
   color: '#adff2f',
 });
-rate.render();
-const rate2 = new Rate('pieProgress', {
+pie.render();
+const pie2 = new Rate('pieProgress', {
   type: 'pie',
   rotate: 66,
   color: '#adff2f',
   index: 2,
 });
-rate2.render();
+pie2.render();
 const linePress = new Rate('lineProgress', {
   type: 'linePress',
   rotate: 77,
